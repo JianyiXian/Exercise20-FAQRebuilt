@@ -19,39 +19,60 @@
 </head>
 
 <body style="background-color: #fae1dd;">
-    <div class='accordion accordion-flush w-50 mx-auto mt-5' id='accordion'>
+    <div id="root" class="container w-50 mx-auto mt-5"></div>
 
-    </div>
 </body>
 <script type="text/babel">
 
-    const AccordianComponent = (props) => {
+    const FAQ = [
+        { id: 'flush-collapseOne', title: 'I do not remember my password', content: 'You can find in the login page, where there is a reset password button' },
+        { id: 'flush-collapseTwo', title: 'How can I create an account?', content: 'You can find in the sign button on the top left' },
+        { id: 'flush-collapseThree', title: 'What is the delivery hours?', content: 'We will delivery the next day you ordered' },
+        { id: 'flush-collapseFour', title: 'How much time it takes to deliver the order?', content: 'It takes about four days to delivery the order, if you want a quick delivery, please click the quick delivery when checks out' }
+    ]
+
+    const AccordionList = () => {
         return (
+            <div className='accordion accordion-flush' id='accordion'>
+                {
+                    FAQ.map(question => (
+                        <AccordianItems id={question.id} title={question.title} content={question.content} />
+                    ))
+                }
+            </div>
+
+        )
+    }
+
+    const AccordianItems = (props) => {
+        return (
+
             <div className='accordion-item'>
                 <h2 className='accordion-header'>
                     <button
                         className='accordion-button collapsed shadow-none'
                         type='button'
                         data-bs-toggle='collapse'
-                        data-bs-target={'#' + props.contentId}
+                        data-bs-target={'#' + props.id}
                         aria-expanded='false'
-                        aria-controls={props.contentId}
-                    >{props.name}</button>
+                        aria-controls={props.id}
+                    >{props.title}</button>
                 </h2>
-                <div id={props.contentId} className='accordion-collapse collapse' data-bs-parent='#accordion'>
+                <div id={props.id} className='accordion-collapse collapse' data-bs-parent='#accordion'>
                     <div className='accordion-body'>
-                        {props.content}</div>
+                        {props.content}
+                    </div>
                 </div>
             </div>
+
         )
     }
 
-    const accordion = ReactDOM.createRoot(document.getElementById('accordion'))
-    accordion.render([
-        <AccordianComponent name="I don't remember my password" contentId='flush-collapseOne' content='You can find in the login page, where there is a reset password button' />,
-        <AccordianComponent name="How can I create an account?" contentId='flush-collapseTwo' content='You can find in the sign button on the top left' />,
-        <AccordianComponent name="What is the delivery hours?" contentId='flush-collapseThree' content='We will delivery the next day you ordered' />,
-        <AccordianComponent name="How much time it takes to deliver the order?" contentId='flush-collapseFour' content='It takes about four days to delivery the order, if you want a quick delivery, please click the quick delivery when checks out' />])
+    console.log()
+
+    const accordion = ReactDOM.createRoot(document.getElementById('root'))
+    accordion.render(
+        <AccordionList />)
 </script>
 
 
